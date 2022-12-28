@@ -1,0 +1,6 @@
+# 노드 모듈
+node_modules
+
+#env
+.env
+*.env
