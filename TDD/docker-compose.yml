@@ -11,6 +11,8 @@ services:
 
   node:
     container_name: node-tdd-app
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: './Dockerfile'
