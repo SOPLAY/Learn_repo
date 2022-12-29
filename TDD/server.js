@@ -20,6 +20,11 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+//error handling
+app.use((error, req, res, next) => {
+  res.status(500).json({ message: error.message });
+});
+
 const server = app.listen(PORT);
 console.log(`Running on port ${PORT}`);
 
