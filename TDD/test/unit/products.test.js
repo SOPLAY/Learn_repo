@@ -44,7 +44,6 @@ describe('Product Controller Create', () => {
 
   it('에러 헨들링', async () => {
     const errorMessage = { message: 'description property is missing' };
-
     const rejectedPromise = Promise.reject(errorMessage);
     productModel.create.mockReturnValue(rejectedPromise);
     await productController.createProduct(req, res, next);

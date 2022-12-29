@@ -1,6 +1,9 @@
 # 노드 모듈
 node_modules
 
+# jest env 설정 파일
+.jest
+
 #env
 .env
 *.env
