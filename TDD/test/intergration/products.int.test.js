@@ -3,6 +3,11 @@ const { app, server } = require('../../server');
 const newProductData = require('../data/new-product.json');
 const { default: mongoose } = require('mongoose');
 
+afterEach(async () => {
+  await mongoose.connection.close();
+  server.close();
+});
+
 it('POST /api/products', async () => {
   const response = await request(app)
     .post('/api/products')
