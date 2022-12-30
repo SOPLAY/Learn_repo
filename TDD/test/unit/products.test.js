@@ -4,7 +4,7 @@ const httpMocks = require('node-mocks-http');
 const newProduct = require('../data/new-product.json');
 
 productModel.create = jest.fn();
-
+productModel.find = jest.fn();
 //테스트 에서 쓸 공통 블록 변수 지정
 let req, res, next;
 beforeEach(() => {
@@ -13,6 +13,7 @@ beforeEach(() => {
   next = jest.fn();
 });
 
+//create test
 describe('Product Controller Create', () => {
   //describe 내의 블록 변수
   beforeEach(() => {
@@ -48,5 +49,17 @@ describe('Product Controller Create', () => {
     productModel.create.mockReturnValue(rejectedPromise);
     await productController.createProduct(req, res, next);
     expect(next).toBeCalledWith(errorMessage);
+  });
+});
+
+//read test
+describe('Product Controller Get', () => {
+  it('should have a getProducts function', () => {
+    expect(typeof productController.getProducts).toBe('function');
+  });
+
+  it('should call ProductModal.find({})', async () => {
+    await productController.getProducts(req, res, next);
+    expect(productModel.find).toHaveBeenCalledWith({});
   });
 });

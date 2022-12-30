@@ -26,6 +26,6 @@ app.use((error, req, res, next) => {
 });
 
 const server = app.listen(PORT);
-console.log(`Running on port ${PORT}`);
+// console.log(`Running on port ${PORT}`);
 
 module.exports = { app, server };
