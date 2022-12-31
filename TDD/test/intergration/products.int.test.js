@@ -3,7 +3,7 @@ const { app, server } = require('../../server');
 const newProductData = require('../data/new-product.json');
 const { default: mongoose } = require('mongoose');
 
-afterEach(async () => {
+afterAll(async () => {
   await mongoose.connection.close();
   server.close();
 });
@@ -22,4 +22,12 @@ it('should return 500 on POST /api/products', async () => {
     message:
       'Product validation failed: description: Path `description` is required.',
   });
+});
+
+it('GET /api/products', async () => {
+  const res = await request(app).get('/api/products');
+  expect(res.statusCode).toBe(200);
+  expect(Array.isArray(res.body)).toBeTruthy();
+  expect(res.body[0].name).toBeDefined();
+  expect(res.body[0].description).toBeDefined();
 });
