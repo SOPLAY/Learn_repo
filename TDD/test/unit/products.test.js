@@ -113,4 +113,12 @@ describe('Product Controller GetById ', () => {
     expect(res.statusCode).toBe(404);
     expect(res._isEndCalled).toBeTruthy();
   });
+
+  it('should handle errors', async () => {
+    const errorMessage = { message: 'error' };
+    const rejectedPromise = Promise.reject(errorMessage);
+    productModel.findById.mockReturnValue(rejectedPromise);
+    await productController.getProductById(req, res, next);
+    expect(next).toHaveBeenCalledWith(errorMessage);
+  });
 });
