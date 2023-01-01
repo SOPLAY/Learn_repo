@@ -8,6 +8,8 @@ afterAll(async () => {
   server.close();
 });
 
+let firstProduct;
+
 it('POST /api/products', async () => {
   const res = await request(app).post('/api/products').send(newProductData);
   expect(res.statusCode).toBe(201);
@@ -30,4 +32,19 @@ it('GET /api/products', async () => {
   expect(Array.isArray(res.body)).toBeTruthy();
   expect(res.body[0].name).toBeDefined();
   expect(res.body[0].description).toBeDefined();
+  firstProduct = res.body[0];
+});
+
+it('GET /api/products/:productId', async () => {
+  const res = await request(app).get(`/api/products/${firstProduct._id}`);
+  expect(res.statusCode).toBe(200);
+  expect(res.body.name).toBe(firstProduct.name);
+  expect(res.body.description).toBe(firstProduct.description);
+  expect(res.body.price).toBe(firstProduct.price);
+});
+
+it('GET id doenst exist /api/products/:productId ', async () => {
+  //이상한 productId 값일 때
+  const res = await request(app).get(`/api/products/63ac5fef30fed75cf154f093`);
+  expect(res.statusCode).toBe(404);
 });
